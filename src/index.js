@@ -66,5 +66,6 @@ function createWikiItem(breed, imageUrl, summary) {
   wikiContent.appendChild(wikiText);
   wikiItem.appendChild(header);
   wikiItem.appendChild(wikiContent);
+  
   document.body.appendChild(wikiItem);
 }
