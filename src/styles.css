@@ -5,3 +5,25 @@ body {
 .wiki-img {
   width: 100%;
 }
+
+.wiki-header {
+  text-align: center;
+  font-size: 20px;
+  padding-top: 5px;
+}
+
+.wiki-item {
+  margin-left: 10px;
+  margin-right: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  margin-bottom: 10px;
+}
+
+.wiki-content {
+  padding: 10px;
+}
+
+.wiki-text {
+  margin-top: 10px;
+  font-size: 14px;
+}
