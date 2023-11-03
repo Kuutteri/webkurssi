@@ -8,11 +8,15 @@ if (document.readyState !== "loading") {
 
 async function initializeCode() {
   const dogBreeds = ["pomeranian", "bulldog", "poodle", "husky", "dalmatian"];
-  for (const breed of dogBreeds) {
-    const image = await getDogImageByBreed(breed);
-    const summary = await getDogSummaryByBreed(breed);
-    createWikiItem(breed.charAt(0).toUpperCase() + breed.slice(1), image, summary);
-  }
+  const breedDataPromises = dogBreeds.map(breed => {
+    return Promise.all([
+      getDogImageByBreed(breed),
+      getDogSummaryByBreed(breed)
+    ]).then(([image, summary]) => {
+      createWikiItem(breed.charAt(0).toUpperCase() + breed.slice(1), image, summary);
+    });
+  });
+  await Promise.all(breedDataPromises);
 }
 
 async function getDogImageByBreed(breed) {
