@@ -11,13 +11,13 @@ if (document.readyState !== "loading") {
 async function initializeCode() {
   const dogBreeds = ["pomeranian", "bulldog", "poodle", "husky", "dalmatian"];
   for (const breed of dogBreeds) {
-    const imageUrl = await getRandomDogImage(breed);
-    const summaryUrl = await getDogSummaryByBreed(breed);
-    createWikiItem(breed.charAt(0).toUpperCase() + breed.slice(1), imageUrl, summaryUrl);
+    const image = await getDogImageByBreed(breed);
+    const summary = await getDogSummaryByBreed(breed);
+    createWikiItem(breed.charAt(0).toUpperCase() + breed.slice(1), image, summary);
   }
 }
 
-async function getRandomDogImage(breed) {
+async function getDogImageByBreed(breed) {
   const apiUrl = `https://dog.ceo/api/breed/${breed}/images/random`;
   const response = await fetch(apiUrl);
   const data = await response.json();
@@ -66,6 +66,5 @@ function createWikiItem(breed, imageUrl, summary) {
   wikiContent.appendChild(wikiText);
   wikiItem.appendChild(header);
   wikiItem.appendChild(wikiContent);
-
   document.body.appendChild(wikiItem);
 }
