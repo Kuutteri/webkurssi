@@ -27,3 +27,20 @@ body {
   margin-top: 10px;
   font-size: 14px;
 }
+
+@media (min-width: 600px) {
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .wiki-content {
+    display: flex;
+    flex-flow: row-reverse;
+  }
+
+  .wiki-text, .img-container {
+    min-width: 50%;
+    max-width: 50%;
+  }
+}

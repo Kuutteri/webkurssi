@@ -9,11 +9,11 @@ if (document.readyState !== "loading") {
 }
 
 async function initializeCode() {
-  const dogBreeds = ["akita", "poodle", "pomeranian", "husky", "boxer"];
-  // Iterate through the dog breeds and fetch images
+  const dogBreeds = ["pomeranian", "bulldog", "poodle", "husky", "dalmatian"];
   for (const breed of dogBreeds) {
     const imageUrl = await getRandomDogImage(breed);
-    createWikiItem(breed.charAt(0).toUpperCase() + breed.slice(1), imageUrl);
+    const summaryUrl = await getDogSummaryByBreed(breed);
+    createWikiItem(breed.charAt(0).toUpperCase() + breed.slice(1), imageUrl, summaryUrl);
   }
 }
 
@@ -24,7 +24,22 @@ async function getRandomDogImage(breed) {
   return data.message;
 }
 
-function createWikiItem(breed, imageUrl) {
+async function getDogSummaryByBreed(breed) {
+  try {
+    const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${breed}`;
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch Wikipedia summary for ${breed}`);
+    }
+    const data = await response.json();
+    return data.extract || "Summary unavailable";
+  } catch (error) {
+    console.error(error);
+    return "Failed to fetch Wikipedia summary";
+  }
+}
+
+function createWikiItem(breed, imageUrl, summary) {
   const wikiItem = document.createElement("div");
   wikiItem.classList.add("wiki-item");
 
@@ -37,7 +52,7 @@ function createWikiItem(breed, imageUrl) {
 
   const wikiText = document.createElement("p");
   wikiText.classList.add("wiki-text");
-  wikiText.textContent = breed + "s are good dogs";
+  wikiText.textContent = summary;
 
   const imgContainer = document.createElement("div");
   imgContainer.classList.add("img-container");
